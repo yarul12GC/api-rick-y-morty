@@ -19,12 +19,14 @@ export class ContenidoComponent implements OnInit {
   // mensaje de carga 
 
   isLoading = true;
+
+
   selectedCharacter: any;
   episodes: any[] = [];
 
-  nameFilter: string = ''; // Filtro por nombre
-  statusFilter: string = ''; // Filtro por estatus
-  speciesFilter: string = ''; // Filtro por especie
+  nameFilter: string = '';
+  statusFilter: string = '';
+  speciesFilter: string = '';
 
   specieColors: { [key: string]: string } = {
     Human: '#1f77b4',              // Azul oscuro
@@ -40,6 +42,8 @@ export class ContenidoComponent implements OnInit {
 
   pageSize = 20;
   currentPage = 1;
+
+  
 
   constructor(private apiService: ApiService, private http: HttpClient) { }
 
@@ -69,7 +73,7 @@ export class ContenidoComponent implements OnInit {
   }
 
 
-  // filtro
+  // busqueda por filtros
   applyFilters(): void {
     this.filteredData = this.data.filter((character) => {
       return (
@@ -96,7 +100,8 @@ export class ContenidoComponent implements OnInit {
     return this.specieColors[species] || '#ffffff';
   }
 
-  // Paginación
+
+  // Paginación 
   get paginatedData(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     return this.filteredData.slice(startIndex, startIndex + this.pageSize);
@@ -113,4 +118,7 @@ export class ContenidoComponent implements OnInit {
       this.currentPage--;
     }
   }
+
+
+
 }

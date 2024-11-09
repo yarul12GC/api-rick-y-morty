@@ -1,31 +1,36 @@
-<div class="zona1">
-    <form (ngSubmit)="onLogin()">
-        <h1 style="color: rgb(205, 123, 0); text-align: center;">Login Rick y Morty</h1>
+<div class="zona1 d-flex justify-content-center align-items-center" style="height: 90vh;">
+  <div class="row w-100">
+
+    <div class="col-12 col-md-6 d-flex justify-content-center mb-4 mb-md-0">
+      <img src="iconolog.png" alt="Logo" class="img-fluid">
+    </div>
+
+    <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+
+      <form (ngSubmit)="onLogin()" style="width: 90%; max-width: 400px;">
+        <h1 class="text-center" style="color: rgb(205, 123, 0);">Login Rick y Morty</h1>
+        <br>
+
+        <h4 style="color: rgb(205, 123, 0);">Credenciales:</h4>
+        <div class="form-group">
+          <label for="username" class="form-label" style="color: aliceblue;"><strong> Username: </strong>rick</label>
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-label" style="color: aliceblue;"><strong>Password:</strong> morty123</label>
+        </div>
         <br />
         <div class="mb-3">
-            <label for="username" class="form-label" style="color: aliceblue;">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              [(ngModel)]="username"
-              name="username"
-              required
-            />
+          <label for="username" class="form-label" style="color: aliceblue;">Username: rick</label>
+          <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required />
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label" style="color: aliceblue;">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              [(ngModel)]="password"
-              name="password"
-              required
-            />
+          <label for="password" class="form-label" style="color: aliceblue;">Password</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required />
         </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary w-100">Login</button>
         <p *ngIf="errorMessage" style="color: red; text-align: center;">{{ errorMessage }}</p>
-    </form>
+      </form>
+    </div>
+  </div>
 </div>

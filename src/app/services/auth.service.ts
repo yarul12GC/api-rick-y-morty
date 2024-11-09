@@ -13,14 +13,14 @@ export class AuthService {
 
   login(username: string, password: string): boolean {
     if (username === 'rick' && password === 'morty123') {
-      this.isAuthenticated.next(true); // Cambiar el estado a autenticado
-      return true; // Inicio de sesión exitoso
+      this.isAuthenticated.next(true);
+      return true;
     }
-    return false; // Inicio de sesión fallido
+    return false;
   }
 
   logout(): void {
-    this.isAuthenticated.next(false); // Cambiar el estado a no autenticado
+    this.isAuthenticated.next(false);
   }
 
   isUserAuthenticated(): boolean {

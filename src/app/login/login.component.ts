@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,  // Marca como autónomo
-  imports: [FormsModule, CommonModule],  // Incluye FormsModule y CommonModule aquí
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -17,14 +17,13 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onLogin(): void {
-    // Intentamos iniciar sesión con el usuario y la contraseña
-    const isLoggedIn = this.authService.login(this.username, this.password);
 
+    const isLoggedIn = this.authService.login(this.username, this.password);
     if (isLoggedIn) {
-      this.router.navigate(['/contenido']); // Redirigir a la página de contenido si el login es exitoso
+      this.router.navigate(['/contenido']);
     } else {
       this.errorMessage = 'Credenciales incorrectas. Intente de nuevo.';
     }
