@@ -1,0 +1,12 @@
+.zona1 {
+    width: 95%;
+    height: auto;
+    background: rgb(51, 51, 51);
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 10px;
+    color: #000000;
+    border-radius: 5px;
+    box-shadow: 7px 13px 37px #000000;
+  
+}
