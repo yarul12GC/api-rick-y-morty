@@ -2,20 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
-import { FormsModule } from '@angular/forms';  // Importa FormsModule aquí
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-contenido',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],  // Asegúrate de incluir FormsModule aquí
+  imports: [CommonModule, HttpClientModule, FormsModule],
   providers: [ApiService],
   templateUrl: './contenido.component.html',
   styleUrls: ['./contenido.component.css'],
 })
 export class ContenidoComponent implements OnInit {
   data: any[] = [];
-  filteredData: any[] = []; // Datos filtrados
+  filteredData: any[] = [];
+
+  // mensaje de carga 
+
   isLoading = true;
   selectedCharacter: any;
   episodes: any[] = [];
@@ -25,38 +27,49 @@ export class ContenidoComponent implements OnInit {
   speciesFilter: string = ''; // Filtro por especie
 
   specieColors: { [key: string]: string } = {
-    Human: '#414e9a', // Azul
-    Alien: '#f0ad4e', // Naranja
-    Humanoid: '#5bc0de', // Azul
-    Poopybutthole: '#d9534f', // Rojo
-    Robot: '#0275d8', // Azul fuerte
+    Human: '#1f77b4',              // Azul oscuro
+    Alien: '#27ae60',              // Verde más oscuro
+    Humanoid: '#8e44ad',           // Morado oscuro
+    Poopybutthole: '#c0392b',      // Rojo oscuro
+    Robot: '#16a085',              // Verde azulado oscuro
+    Animal: '#e67e22',             // Naranja oscuro
+    unknown: '#7f8c8d',            // Gris oscuro
+    'Mythological Creature': '#6c3483' // Morado muy oscuro
   };
 
-  // Paginación
-  pageSize = 5;
+
+  pageSize = 20;
   currentPage = 1;
 
-  constructor(private apiService: ApiService, private http: HttpClient) {}
+  constructor(private apiService: ApiService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.llenarData();
   }
 
+  // Función para llenar los datos con las  páginas
   llenarData(): void {
-    this.apiService.getData().subscribe(
-      (response) => {
-        this.data = response.results;
-        this.filteredData = [...this.data]; // Inicializar con los datos completos
-        this.isLoading = false;
-      },
-      (error) => {
-        console.error('Error al obtener los datos:', error);
-        this.isLoading = false;
-      }
-    );
+    const pagesToLoad = [1, 2, 3];
+    const allData: any[] = [];
+
+    pagesToLoad.forEach((page) => {
+      this.apiService.getData(page).subscribe(
+        (response) => {
+          allData.push(...response.results);
+          this.data = allData;
+          this.filteredData = [...this.data];
+          this.isLoading = false;
+        },
+        (error) => {
+          console.error('Error al obtener los datos:', error);
+          this.isLoading = false;
+        }
+      );
+    });
   }
 
-  // Función para aplicar los filtros
+
+  // filtro
   applyFilters(): void {
     this.filteredData = this.data.filter((character) => {
       return (
@@ -67,6 +80,7 @@ export class ContenidoComponent implements OnInit {
     });
   }
 
+  //asignar los episodios y abrir modal
   showCharacterDetails(character: any): void {
     this.selectedCharacter = character;
     this.episodes = [];
@@ -77,6 +91,7 @@ export class ContenidoComponent implements OnInit {
     });
   }
 
+  // asignar los colores
   getSpecieColors(species: string): string {
     return this.specieColors[species] || '#ffffff';
   }

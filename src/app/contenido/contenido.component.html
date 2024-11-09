@@ -12,16 +12,14 @@
                     <option value="Alive">Alive</option>
                     <option value="Dead">Dead</option>
                     <option value="unknown">Unknown</option>
-                </select>
-            </div>
+                </select></div>
             <div class="col-md-4"> <select [(ngModel)]="speciesFilter" (change)="applyFilters()" class="form-select">
                     <option value="">Seleccionar Especie</option>
                     <option value="Human">Human</option>
                     <option value="Alien">Alien</option>
                     <option value="Humanoid">Humanoid</option>
                     <option value="Robot">Robot</option>
-                </select>
-            </div>
+                </select></div>
         </div>
     </div>
     <br>
@@ -31,18 +29,16 @@
         <div class="row">
             <div *ngFor="let character of paginatedData" class="col-12 col-md-4 mb-4">
                 <div class="card" [ngStyle]="{'background': getSpecieColors(character.species)}">
-                    <h3 class="text-center">{{ character.name }}</h3>
-                    <div class="card-body">
-                        <img [src]="character.image" alt="{{ character.name }}" class="card-img-top">
+                    <div class="card-body p-0"> 
+                        <img [src]="character.image" alt="{{ character.name }}"  class="card-img-top w-100 m-0"
+                        (click)="showCharacterDetails(character)" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                      
+                        <h3 class="text-center">{{ character.name }}</h3>
+
                         <p class="card-title">Status: {{ character.status }}</p>
                         <p class="card-text">Species: {{
                             character.species }}</p>
-                        <div class="justify-content-center">
-                            <button type="button" class="btn btn-primary" (click)="showCharacterDetails(character)"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                Detalles
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

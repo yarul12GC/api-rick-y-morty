@@ -11,11 +11,13 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  public getData(): Observable<any> {
-    return this.http.get<any>(this.urlapi);
-  }
-  public getEpisodeDetails(url: string): Observable<any> {
-    return this.http.get<any>(url);  // Aquí hacemos la solicitud HTTP para obtener los episodios
+  // Método para obtener los datos de una página específica
+  public getData(page: number = 1): Observable<any> {
+    const urlWithPage = `${this.urlapi}?page=${page}`;  
+    return this.http.get<any>(urlWithPage);
   }
 
+  public getEpisodeDetails(url: string): Observable<any> {
+    return this.http.get<any>(url);  
+  }
 }
