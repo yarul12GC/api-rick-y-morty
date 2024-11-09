@@ -1,0 +1,119 @@
+<div class="zona1">
+    <h1 style="color: rgb(205, 123, 0); ">Rick y Morty</h1>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" placeholder="Buscar por nombre" [(ngModel)]="nameFilter" (input)="applyFilters()"
+                    class="form-control" />
+            </div>
+            <div class="col-md-4"><select [(ngModel)]="statusFilter" (change)="applyFilters()" class="form-select">
+                    <option value="">Seleccionar Estatus</option>
+                    <option value="Alive">Alive</option>
+                    <option value="Dead">Dead</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+            </div>
+            <div class="col-md-4"> <select [(ngModel)]="speciesFilter" (change)="applyFilters()" class="form-select">
+                    <option value="">Seleccionar Especie</option>
+                    <option value="Human">Human</option>
+                    <option value="Alien">Alien</option>
+                    <option value="Humanoid">Humanoid</option>
+                    <option value="Robot">Robot</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+    <div *ngIf="data.length > 0; else loading" class="container">
+        <div class="row">
+            <div *ngFor="let character of paginatedData" class="col-12 col-md-4 mb-4">
+                <div class="card" [ngStyle]="{'background': getSpecieColors(character.species)}">
+                    <h3 class="text-center">{{ character.name }}</h3>
+                    <div class="card-body">
+                        <img [src]="character.image" alt="{{ character.name }}" class="card-img-top">
+                        <p class="card-title">Status: {{ character.status }}</p>
+                        <p class="card-text">Species: {{
+                            character.species }}</p>
+                        <div class="justify-content-center">
+                            <button type="button" class="btn btn-primary" (click)="showCharacterDetails(character)"
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                Detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="pagination-buttons text-center mt-4">
+            <button class="btn btn-secondary me-2" (click)="previousPage()" [disabled]="currentPage === 1">
+                << </button>
+                    <span style="color: aliceblue;">Página {{ currentPage }}</span>
+                    <button class="btn btn-secondary ms-2" (click)="nextPage()"
+                        [disabled]="currentPage * pageSize >= data.length"> >> </button>
+        </div>
+    </div>
+
+    <ng-template #loading>
+        <p class="text-center">Cargando...</p>
+    </ng-template>
+</div>
+
+
+
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="max-width: 90%;">
+        <div class="modal-content" [style]="{'background-color': getSpecieColors(selectedCharacter?.species)}">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-4" id="staticBackdropLabel">{{ selectedCharacter?.name }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container text-center">
+
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-12 col-md-5 text-center mb-3">
+                            <img [src]="selectedCharacter?.image" alt="{{ selectedCharacter?.name }}"
+                                class="img-fluid rounded-circle" style="max-width: 90%;">
+                        </div>
+                        <div class="col-12 col-md-6" style="color: rgb(0, 0, 0);">
+                            <p><strong>Status:</strong> {{ selectedCharacter?.status }}</p>
+                            <p><strong>Species:</strong> {{ selectedCharacter?.species }}</p>
+                            <p><strong>Gender:</strong> {{ selectedCharacter?.gender }}</p>
+                            <p><strong>Location:</strong> {{ selectedCharacter?.location?.name }}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div *ngIf="episodes.length > 0">
+                    <br>
+                    <h3 style="text-align: center;">Episodios:</h3>
+                    <br>
+                    <div class="row justify-content-center">
+                        <div *ngFor="let episode of episodes" class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card1 shadow-sm border-light">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ episode.name }}</h5>
+                                    <p class="card-text ">Episode: {{ episode.episode }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
