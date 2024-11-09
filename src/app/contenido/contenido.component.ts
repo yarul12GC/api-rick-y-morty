@@ -3,11 +3,13 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../services/auth.service';  // Asegúrate de importar tu servicio de autenticación
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-contenido',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule, ],
   providers: [ApiService],
   templateUrl: './contenido.component.html',
   styleUrls: ['./contenido.component.css'],
@@ -45,8 +47,12 @@ export class ContenidoComponent implements OnInit {
 
   
 
-  constructor(private apiService: ApiService, private http: HttpClient) { }
-
+  constructor(
+    private apiService: ApiService, 
+    private http: HttpClient,
+    private authService: AuthService, // Inyecta el servicio de autenticación
+    private router: Router // Inyecta el servicio Router para redirigir
+  ) {}
   ngOnInit(): void {
     this.llenarData();
   }
@@ -119,6 +125,9 @@ export class ContenidoComponent implements OnInit {
     }
   }
 
-
+  onLogout(): void {
+    this.authService.logout(); // Llama al método logout del servicio de autenticación
+    this.router.navigate(['/login']); // Redirige al usuario a la página de login
+  }
 
 }

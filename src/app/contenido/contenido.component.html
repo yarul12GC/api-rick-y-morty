@@ -1,4 +1,8 @@
 <div class="zona1">
+<div class="d-flex justify-content-end">
+        <button (click)="onLogout()" class="btn btn-danger justify-content-end">Salir</button>
+    </div>
+
     <h1 style="color: rgb(205, 123, 0); ">Rick y Morty</h1>
     <br>
     <div class="container">
@@ -32,11 +36,11 @@
         <div class="row">
             <div *ngFor="let character of paginatedData" class="col-12 col-md-4 mb-4">
                 <div class="card" [ngStyle]="{'background': getSpecieColors(character.species)}">
-                    <div class="card-body p-0"> 
-                        <img [src]="character.image" alt="{{ character.name }}"  class="card-img-top w-100 m-0"
-                        (click)="showCharacterDetails(character)" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">
-                      
+                    <div class="card-body p-0">
+                        <img [src]="character.image" alt="{{ character.name }}" class="card-img-top w-100 m-0"
+                            (click)="showCharacterDetails(character)" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+
                         <h3 class="text-center">{{ character.name }}</h3>
 
                         <p class="card-title">Status: {{ character.status }}</p>
@@ -71,7 +75,7 @@
     <div class="modal-dialog modal-lg" style="max-width: 90%;">
         <div class="modal-content" [style]="{'background-color': getSpecieColors(selectedCharacter?.species)}">
 
-            <div class="modal-header" style="background-color: black; color: aliceblue;" >
+            <div class="modal-header" style="background-color: rgb(102, 102, 102); color: aliceblue;">
                 <h1 class="modal-title fs-4" id="staticBackdropLabel">{{ selectedCharacter?.name }}</h1>
             </div>
             <div class="modal-body">
